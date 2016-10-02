@@ -1,5 +1,5 @@
-#ifndef SSDiLepAnalysis_SSDiLepTree_H
-#define SSDiLepAnalysis_SSDiLepTree_H
+#ifndef SSDiMuAnalysis_SSDiMuTree_H
+#define SSDiMuAnalysis_SSDiMuTree_H
 
 // package include(s):
 #include "xAODAnaHelpers/HelpTreeBase.h"
@@ -20,7 +20,7 @@
 #include "TTree.h"
 #include "TFile.h"
 
-class SSDiLepTree : public HelpTreeBase
+class SSDiMuTree : public HelpTreeBase
 {
 
   private:
@@ -78,8 +78,8 @@ class SSDiLepTree : public HelpTreeBase
 
   public:
 
-    SSDiLepTree( TTree* tree, TFile* file, xAOD::TEvent* event, xAOD::TStore* store, const float units = 1e3, bool debug = false, bool DC14 = false );
-    ~SSDiLepTree();
+    SSDiMuTree( TTree* tree, TFile* file, xAOD::TEvent* event, xAOD::TStore* store, const float units = 1e3, bool debug = false, bool DC14 = false );
+    ~SSDiMuTree();
 
     void AddEventUser(const std::string detailStrUser = "");
     /*void AddTriggerUser(const std::string detailStrUser = "");*/

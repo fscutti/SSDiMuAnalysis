@@ -28,7 +28,7 @@
 #include "xAODTruth/TruthVertex.h"
 
 // package include(s):
-#include "SSDiLepAnalysis/TruthMatchAlgo.h"
+#include "SSDiMuAnalysis/TruthMatchAlgo.h"
 #include "xAODAnaHelpers/HelperClasses.h"
 #include "xAODAnaHelpers/HelperFunctions.h"
 #include <xAODAnaHelpers/tools/ReturnCheck.h>
@@ -605,7 +605,7 @@ EL::StatusCode TruthMatchAlgo ::  applyTruthMatchingElectron ( const xAOD::IPart
       return StatusCode::SUCCESS;
   }
 
-  // truth particle types are defined in SSDiLepAnalysis/MCTruthClassifierDefs.h:
+  // truth particle types are defined in SSDiMuAnalysis/MCTruthClassifierDefs.h:
   //
   // further explaination can be found in: https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/MCTruthClassifier
   //

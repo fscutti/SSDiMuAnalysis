@@ -1,14 +1,14 @@
-#ifndef SSDiLepAnalysis_SSDiLepTreeAlgo_H
-#define SSDiLepAnalysis_SSDiLepTreeAlgo_H
+#ifndef SSDiMuAnalysis_SSDiMuTreeAlgo_H
+#define SSDiMuAnalysis_SSDiMuTreeAlgo_H
 
 // EL include(s)
 #include <EventLoop/Algorithm.h>
 
 // package include(s):
 #include <xAODAnaHelpers/TreeAlgo.h>
-#include <SSDiLepAnalysis/SSDiLepTree.h>
+#include <SSDiMuAnalysis/SSDiMuTree.h>
 
-class SSDiLepTreeAlgo : public TreeAlgo
+class SSDiMuTreeAlgo : public TreeAlgo
 {
   // put your configuration variables here as public variables.
   // that way they can be set directly from CINT and python.
@@ -19,10 +19,10 @@ public:
   //std::string m_lepContainerName;
 
   // this is a standard constructor
-  SSDiLepTreeAlgo () :
+  SSDiMuTreeAlgo () :
     TreeAlgo()
   {
-    Info("SSDiLepTreeAlgo::SSDiLepTreeAlgo()","Forcing energy/momentum units to MeV...");
+    Info("SSDiMuTreeAlgo::SSDiMuTreeAlgo()","Forcing energy/momentum units to MeV...");
     m_units = 1e0;
   };
 
@@ -34,7 +34,7 @@ public:
   // these are the functions not inherited from Algorithm
 
   // this is needed to distribute the algorithm to the workers
-  ClassDef(SSDiLepTreeAlgo, 1);
+  ClassDef(SSDiMuTreeAlgo, 1);
 };
 
 #endif

@@ -1,14 +1,14 @@
-#include "SSDiLepAnalysis/SSDiLepTree.h"
+#include "SSDiMuAnalysis/SSDiMuTree.h"
 
-SSDiLepTree :: SSDiLepTree( TTree* tree, TFile* file, xAOD::TEvent* event, xAOD::TStore* store, const float units, bool debug, bool DC14 ) :
+SSDiMuTree :: SSDiMuTree( TTree* tree, TFile* file, xAOD::TEvent* event, xAOD::TStore* store, const float units, bool debug, bool DC14 ) :
   HelpTreeBase(tree, file, event, store, units, debug, DC14 )
 {
-  Info("SSDiLepTree", "Creating output TTree");
+  Info("SSDiMuTree", "Creating output TTree");
 }
 
-SSDiLepTree :: ~SSDiLepTree() {}
+SSDiMuTree :: ~SSDiMuTree() {}
 
-void SSDiLepTree::AddEventUser(const std::string detailStrUser)
+void SSDiMuTree::AddEventUser(const std::string detailStrUser)
 {
 
   // to get rid of warning when detailString is not used
@@ -101,7 +101,7 @@ void SSDiLepTree::AddEventUser(const std::string detailStrUser)
 }
 
 /*
-void SSDiLepTree::AddTriggerUser(const std::string detailStrUser)
+void SSDiMuTree::AddTriggerUser(const std::string detailStrUser)
 {
 
   // to get rid of warning when detailString is not used
@@ -111,7 +111,7 @@ void SSDiLepTree::AddTriggerUser(const std::string detailStrUser)
 }
 */
 
-void SSDiLepTree::AddJetsUser(const std::string detailStrUser, const std::string jetName )
+void SSDiMuTree::AddJetsUser(const std::string detailStrUser, const std::string jetName )
 {
 
   // to get rid of warning when detailString is not used
@@ -121,7 +121,7 @@ void SSDiLepTree::AddJetsUser(const std::string detailStrUser, const std::string
   m_tree->Branch("jet_m",     &m_jet_m);
 }
 
-void SSDiLepTree::AddMuonsUser(const std::string detailStrUser)
+void SSDiMuTree::AddMuonsUser(const std::string detailStrUser)
 {
 
   // to get rid of warning when detailString is not used
@@ -146,7 +146,7 @@ void SSDiLepTree::AddMuonsUser(const std::string detailStrUser)
   m_tree->Branch("muon_ancestorTruthStatus",           &m_muon_ancestorTruthStatus);
 }
 
-void SSDiLepTree::AddElectronsUser(const std::string detailStrUser)
+void SSDiMuTree::AddElectronsUser(const std::string detailStrUser)
 {
 
   // to get rid of warning when detailString is not used
@@ -172,7 +172,7 @@ void SSDiLepTree::AddElectronsUser(const std::string detailStrUser)
   m_tree->Branch("el_ancestorTruthStatus",	       &m_electron_ancestorTruthStatus);
 }
 
-//void SSDiLepTree::AddTausUser(const std::string detailStrUser)
+//void SSDiMuTree::AddTausUser(const std::string detailStrUser)
 //{
 
 //  // to get rid of warning when detailString is not used
@@ -183,7 +183,7 @@ void SSDiLepTree::AddElectronsUser(const std::string detailStrUser)
 
 
 /*
-void SSDiLepTree::AddMETUser(const std::string detailStrUser)
+void SSDiMuTree::AddMETUser(const std::string detailStrUser)
 {
 
   // to get rid of warning when detailString is not used
@@ -192,7 +192,7 @@ void SSDiLepTree::AddMETUser(const std::string detailStrUser)
 }
 */
 
-void SSDiLepTree::ClearEventUser()
+void SSDiMuTree::ClearEventUser()
 {/*
   m_MMWeight.clear();
   m_FFWeight.clear();
@@ -215,10 +215,10 @@ void SSDiLepTree::ClearEventUser()
 }
 
 /*
-void SSDiLepTree::ClearTriggerUser() {}
+void SSDiMuTree::ClearTriggerUser() {}
 */
 
-void SSDiLepTree::ClearMuonsUser()
+void SSDiMuTree::ClearMuonsUser()
 {
   // muon variables
   //m_muon_isTight.clear();
@@ -239,7 +239,7 @@ void SSDiLepTree::ClearMuonsUser()
   m_muon_ancestorTruthStatus.clear();
 }
 
-void SSDiLepTree::ClearElectronsUser()
+void SSDiMuTree::ClearElectronsUser()
 {
   // electron variables
   //m_electron_crack.clear();
@@ -261,7 +261,7 @@ void SSDiLepTree::ClearElectronsUser()
   m_electron_ancestorTruthStatus.clear();
 }
 
-void SSDiLepTree::ClearJetsUser( const std::string jetName )
+void SSDiMuTree::ClearJetsUser( const std::string jetName )
 {
   if ( m_debug ) { Info("ClearJetsUser()", "Clearing jet branches - Jet name: %s", jetName.c_str()); }
 
@@ -271,7 +271,7 @@ void SSDiLepTree::ClearJetsUser( const std::string jetName )
 
 }
 
-//void SSDiLepTree::ClearTausUser()
+//void SSDiMuTree::ClearTausUser()
 //{
 
 // if ( m_debug ) { Info("ClearTausUser()", "Clearing tau branches"); }
@@ -280,10 +280,10 @@ void SSDiLepTree::ClearJetsUser( const std::string jetName )
 //}
 
 /*
-void SSDiLepTree::ClearMETUser() {}
+void SSDiMuTree::ClearMETUser() {}
 */
 
-void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
+void SSDiMuTree::FillEventUser( const xAOD::EventInfo* eventInfo )
 {
   if ( m_debug ) { Info("FillEventUser()", "Filling event"); }
 
@@ -307,17 +307,17 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
 }
 
 /*
-void SSDiLepTree::FillTriggerUser( const xAOD::EventInfo* eventInfo ) { }
+void SSDiMuTree::FillTriggerUser( const xAOD::EventInfo* eventInfo ) { }
 */
 
-void SSDiLepTree::FillJetsUser( const xAOD::Jet* jet, const std::string jetName )
+void SSDiMuTree::FillJetsUser( const xAOD::Jet* jet, const std::string jetName )
 {
   if ( m_debug ) { Info("FillJetsUser()", "Filling jets - Jet name: %s", jetName.c_str()); }
 
   m_jet_m.push_back( jet->m() );
 }
 
-void SSDiLepTree::FillMuonsUser( const xAOD::Muon* muon, const std::string /*muonName = "muon"*/  )
+void SSDiMuTree::FillMuonsUser( const xAOD::Muon* muon, const std::string /*muonName = "muon"*/  )
 {
 
   if ( m_debug ) { Info("FillMuonsUser()", "Filling muons"); }
@@ -380,7 +380,7 @@ void SSDiLepTree::FillMuonsUser( const xAOD::Muon* muon, const std::string /*muo
 
 }
 
-void SSDiLepTree::FillElectronsUser( const xAOD::Electron* electron )
+void SSDiMuTree::FillElectronsUser( const xAOD::Electron* electron )
 {
 
   if ( m_debug ) { Info("FillElectronsUser()", "Filling electrons"); }
@@ -463,7 +463,7 @@ void SSDiLepTree::FillElectronsUser( const xAOD::Electron* electron )
 
 }
 
-//void SSDiLepTree::FillTausUser( const xAOD::TauJet* tau )
+//void SSDiMuTree::FillTausUser( const xAOD::TauJet* tau )
 //{
 
 //  if ( m_debug ) { Info("FillTausUser()", "Filling taus"); }
@@ -476,6 +476,6 @@ void SSDiLepTree::FillElectronsUser( const xAOD::Electron* electron )
 //}
 
 /*
-void SSDiLepTree::FillMETUser( const xAOD::MissingETContainer* met ) {}
+void SSDiMuTree::FillMETUser( const xAOD::MissingETContainer* met ) {}
 */
 

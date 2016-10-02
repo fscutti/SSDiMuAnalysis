@@ -1,5 +1,5 @@
-#ifndef SSDiLepAnalysis_TruthMatchAlgo_H
-#define SSDiLepAnalysis_TruthMatchAlgo_H
+#ifndef SSDiMuAnalysis_TruthMatchAlgo_H
+#define SSDiMuAnalysis_TruthMatchAlgo_H
 
 // EL include(s):
 #include <EventLoop/Algorithm.h>

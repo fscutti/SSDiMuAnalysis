@@ -7,7 +7,7 @@
 
 
 # the name of the package:
-PACKAGE              = SSDiLepAnalysis
+PACKAGE              = SSDiMuAnalysis
 
 # the libraries to link with this one:
 PACKAGE_PRELOAD      = 

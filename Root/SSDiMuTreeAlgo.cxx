@@ -8,8 +8,8 @@
 #include <xAODEventInfo/EventInfo.h>
 #include <AthContainers/ConstDataVector.h>
 
-#include <SSDiLepAnalysis/SSDiLepTree.h>
-#include <SSDiLepAnalysis/SSDiLepTreeAlgo.h>
+#include <SSDiMuAnalysis/SSDiMuTree.h>
+#include <SSDiMuAnalysis/SSDiMuTreeAlgo.h>
 
 #include <xAODAnaHelpers/TreeAlgo.h>
 #include <xAODAnaHelpers/HelperFunctions.h>
@@ -20,9 +20,9 @@
 #include "TSystem.h"
 
 // this is needed to distribute the algorithm to the workers
-ClassImp(SSDiLepTreeAlgo)
+ClassImp(SSDiMuTreeAlgo)
 
-EL::StatusCode SSDiLepTreeAlgo :: execute ()
+EL::StatusCode SSDiMuTreeAlgo :: execute ()
 {
 
   // what systematics do we need to process for this event?
@@ -39,7 +39,7 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
   // note that the way we set this up, none of the below ##SystNames vectors contain the nominal case
   // TODO: do we really need to check for duplicates? Maybe, maybe not.
   if(!m_muSystsVec.empty()){
-    RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(systNames, m_muSystsVec, 0, m_store, m_verbose) ,"");
+    RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(systNames, m_muSystsVec, 0, m_store, m_verbose) ,"");
     for(const auto& systName: *systNames){
       if (std::find(event_systNames.begin(), event_systNames.end(), systName) != event_systNames.end()) continue;
       event_systNames.push_back(systName);
@@ -48,7 +48,7 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
   }
 
   if(!m_elSystsVec.empty()){
-    RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(systNames, m_elSystsVec, 0, m_store, m_verbose) ,"");
+    RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(systNames, m_elSystsVec, 0, m_store, m_verbose) ,"");
     for(const auto& systName: *systNames){
       if (std::find(event_systNames.begin(), event_systNames.end(), systName) != event_systNames.end()) continue;
       event_systNames.push_back(systName);
@@ -57,7 +57,7 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
   }
 
   if(!m_jetSystsVec.empty()){
-    RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(systNames, m_jetSystsVec, 0, m_store, m_verbose) ,"");
+    RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(systNames, m_jetSystsVec, 0, m_store, m_verbose) ,"");
     for(const auto& systName: *systNames){
       if (std::find(event_systNames.begin(), event_systNames.end(), systName) != event_systNames.end()) continue;
       event_systNames.push_back(systName);
@@ -66,7 +66,7 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
   }
 
   //if(!m_photonSystsVec.empty()){
-  //  RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(systNames, m_photonSystsVec, 0, m_store, m_verbose) ,"");
+  //  RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(systNames, m_photonSystsVec, 0, m_store, m_verbose) ,"");
   //  for(const auto& systName: *systNames){
   //    if (std::find(event_systNames.begin(), event_systNames.end(), systName) != event_systNames.end()) continue;
   //    event_systNames.push_back(systName);
@@ -92,8 +92,8 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
 
     //m_units = 1e0; // use MeV by default!
 
-    m_trees[systName] = new SSDiLepTree( outTree, treeFile, m_event, m_store, m_units, m_debug, m_DC14 );
-    SSDiLepTree* helpTree = dynamic_cast<SSDiLepTree*>(m_trees[systName]);
+    m_trees[systName] = new SSDiMuTree( outTree, treeFile, m_event, m_store, m_units, m_debug, m_DC14 );
+    SSDiMuTree* helpTree = dynamic_cast<SSDiMuTree*>(m_trees[systName]);
 
     // tell the tree to go into the file
     outTree->SetDirectory( treeFile->GetDirectory(m_name.c_str()) );
@@ -122,15 +122,15 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
 
   // Get EventInfo and the PrimaryVertices
   const xAOD::EventInfo* eventInfo(nullptr);
-  RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(eventInfo, m_eventInfoContainerName, m_event, m_store, m_verbose) ,"");
+  RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(eventInfo, m_eventInfoContainerName, m_event, m_store, m_verbose) ,"");
   const xAOD::VertexContainer* vertices(nullptr);
-  RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(vertices, "PrimaryVertices", m_event, m_store, m_verbose) ,"");
+  RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(vertices, "PrimaryVertices", m_event, m_store, m_verbose) ,"");
   // get the primaryVertex
   const xAOD::Vertex* primaryVertex = HelperFunctions::getPrimaryVertex( vertices );
 
   for(const auto& systName: event_systNames){
 
-    SSDiLepTree* helpTree = dynamic_cast<SSDiLepTree*>(m_trees[systName]);
+    SSDiMuTree* helpTree = dynamic_cast<SSDiMuTree*>(m_trees[systName]);
 
     // assume the nominal container by default
     std::string muSuffix("");
@@ -164,7 +164,7 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
     // for the containers the were supplied, fill the appropriate vectors
     if ( !m_muContainerName.empty() ) {
       const xAOD::MuonContainer* inMuon(nullptr);
-      RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(inMuon, m_muContainerName+muSuffix, m_event, m_store, m_verbose) ,"");
+      RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(inMuon, m_muContainerName+muSuffix, m_event, m_store, m_verbose) ,"");
       // sort, and pass the reference to FillMuons()
       const xAOD::MuonContainer inMuonsSorted = HelperFunctions::sort_container_pt( inMuon );
       helpTree->FillMuons( &inMuonsSorted, primaryVertex );
@@ -172,7 +172,7 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
 
     if ( !m_elContainerName.empty() ) {
       const xAOD::ElectronContainer* inElec(nullptr);
-      RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(inElec, m_elContainerName+elSuffix, m_event, m_store, m_verbose) ,"");
+      RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(inElec, m_elContainerName+elSuffix, m_event, m_store, m_verbose) ,"");
       // sort, and pass the reference to FillElectrons()
       const xAOD::ElectronContainer inElectronsSorted = HelperFunctions::sort_container_pt( inElec );
       helpTree->FillElectrons( &inElectronsSorted, primaryVertex );
@@ -180,46 +180,46 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
     }
     if ( !m_jetContainerName.empty() ) {
       const xAOD::JetContainer* inJets(nullptr);
-      RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(inJets, m_jetContainerName+jetSuffix, m_event, m_store, m_verbose) ,"");
+      RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(inJets, m_jetContainerName+jetSuffix, m_event, m_store, m_verbose) ,"");
       // sort, and pass the reference to FillJets()
       const xAOD::JetContainer inJetsSorted = HelperFunctions::sort_container_pt( inJets );
       helpTree->FillJets( &inJetsSorted );
     }
     //if ( !m_trigJetContainerName.empty() ) {
     //  const xAOD::JetContainer* inTrigJets(nullptr);
-    //  RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(inTrigJets, m_trigJetContainerName, m_event, m_store, m_verbose) ,"");
+    //  RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(inTrigJets, m_trigJetContainerName, m_event, m_store, m_verbose) ,"");
     //  helpTree->FillJets( inTrigJets, HelperFunctions::getPrimaryVertexLocation(vertices), "trigJet" );
     //}
     //if ( !m_truthJetContainerName.empty() ) {
     //  const xAOD::JetContainer* inTruthJets(nullptr);
-    //  RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(inTruthJets, m_truthJetContainerName, m_event, m_store, m_verbose) ,"");
+    //  RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(inTruthJets, m_truthJetContainerName, m_event, m_store, m_verbose) ,"");
     //      helpTree->FillJets( inTruthJets, HelperFunctions::getPrimaryVertexLocation(vertices), "truthJet" );
     //}
     //if ( !m_fatJetContainerName.empty() ) {
     //  const xAOD::JetContainer* inFatJets(nullptr);
-    //  RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(inFatJets, m_fatJetContainerName, m_event, m_store, m_verbose) ,"");
+    //  RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(inFatJets, m_fatJetContainerName, m_event, m_store, m_verbose) ,"");
     //  helpTree->FillFatJets( inFatJets );
     //}
     //if ( !m_tauContainerName.empty() ) {
     //  const xAOD::TauJetContainer* inTaus(nullptr);
-    //  RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(inTaus, m_tauContainerName, m_event, m_store, m_verbose) , "");
+    //  RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(inTaus, m_tauContainerName, m_event, m_store, m_verbose) , "");
     //  // sort, and pass the reference to FillTaus()
     //  const xAOD::TauJetContainer inTausSorted = HelperFunctions::sort_container_pt( inTaus );
     //  helpTree->FillTaus( &inTausSorted );
     //}
     if ( !m_METContainerName.empty() ) {
       const xAOD::MissingETContainer* inMETCont(nullptr);
-      RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(inMETCont, m_METContainerName, m_event, m_store, m_debug) , "");
+      RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(inMETCont, m_METContainerName, m_event, m_store, m_debug) , "");
       helpTree->FillMET( inMETCont );
     }
     //if ( !m_photonContainerName.empty() ) {
     //  const xAOD::PhotonContainer* inPhotons(nullptr);
-    //  RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(inPhotons, m_photonContainerName+photonSuffix, m_event, m_store, m_verbose) ,"");
+    //  RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(inPhotons, m_photonContainerName+photonSuffix, m_event, m_store, m_verbose) ,"");
     //  helpTree->FillPhotons( inPhotons );
     //}
     //if ( !m_lepContainerName.empty() ) {
     //  ConstDataVector<xAOD::IParticleContainer>* leptonsCDV(nullptr);
-    //  RETURN_CHECK("SSDiLepAnalysis::execute()", HelperFunctions::retrieve(leptonsCDV, m_lepContainerName, m_event, m_store, m_debug) ,"");
+    //  RETURN_CHECK("SSDiMuAnalysis::execute()", HelperFunctions::retrieve(leptonsCDV, m_lepContainerName, m_event, m_store, m_debug) ,"");
     //  // sort, and pass the reference to FillLeptons()
     //  const xAOD::IParticleContainer leptonsSorted = HelperFunctions::sort_container_pt( leptonsCDV->asDataVector() );
     //  helpTree->FillLeptons( &leptonsSorted );

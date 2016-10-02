@@ -1,6 +1,6 @@
-#include <SSDiLepAnalysis/SSDiLepTree.h>
-#include <SSDiLepAnalysis/SSDiLepTreeAlgo.h>
-#include <SSDiLepAnalysis/TruthMatchAlgo.h>
+#include <SSDiMuAnalysis/SSDiMuTree.h>
+#include <SSDiMuAnalysis/SSDiMuTreeAlgo.h>
+#include <SSDiMuAnalysis/TruthMatchAlgo.h>
 #ifdef __CINT__
 
 #pragma link off all globals;
@@ -11,8 +11,8 @@
 #endif
 
 #ifdef __CINT__
-#pragma link C++ class SSDiLepTree+;
-#pragma link C++ class SSDiLepTreeAlgo+;
+#pragma link C++ class SSDiMuTree+;
+#pragma link C++ class SSDiMuTreeAlgo+;
 #pragma link C++ class TruthMatchAlgo+;
 #endif
 
