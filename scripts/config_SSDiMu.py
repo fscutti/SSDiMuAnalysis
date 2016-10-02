@@ -35,7 +35,7 @@ mutrigeffYears = "2015,2016"
 #mutrigeffYears = "2015"
 
 # This is just a RootCore path!!!
-path_ext = "$ROOTCOREBIN/data/SSDiLepAnalysis/ExternalMerged"
+path_ext = "$ROOTCOREBIN/data/SSDiMuAnalysis/ExternalMerged"
 
 # merged
 GRL_file = os.path.join(path_ext,
@@ -115,7 +115,7 @@ PRW_config = ','.join(PRW_files)
 
 ##path_el_eff = "ElectronEfficiencyCorrection/2015_2016/rel20.7/ICHEP_June2016_v3/"
 
-BasicEventSelectionDict = {"m_name"                       : "SSDiLep", 
+BasicEventSelectionDict = {"m_name"                       : "SSDiMu", 
                            "m_debug"                      : False,
                            "m_applyGRLCut"                : True,
                            "m_GRLxml"                     : GRL_file,
@@ -295,7 +295,7 @@ TauSelectorDict =        { "m_name"                       : "tauSelect_selection
                            "m_createSelectedContainer"    : True,
                            "m_decorateSelectedObjects"    : True,
                            "m_minPtDAOD"                  : 15e3,
-                           "m_ConfigPath"                 : "$ROOTCOREBIN/data/SSDiLepAnalysis/Taus/recommended_selection_mc15_final_sel.conf",
+                           "m_ConfigPath"                 : "$ROOTCOREBIN/data/SSDiMuAnalysis/Taus/recommended_selection_mc15_final_sel.conf",
                            #"m_EleOLRFilePath"             : "$ROOTCOREBIN/data/HTopMultilepAnalysis/Taus/eveto_cutvals.root"
                          }                                
 """                                                          
@@ -305,7 +305,7 @@ METConstructorDict =     { "m_name"                       : "met",
                            "m_referenceMETContainer"      : "MET_Reference_AntiKt4EMTopo",
                            "m_mapName"                    : "METAssoc_AntiKt4EMTopo",
                            "m_coreName"                   : "MET_Core_AntiKt4EMTopo",
-                           "m_outputContainer"            : "RefFinal_SSDiLep",
+                           "m_outputContainer"            : "RefFinal_SSDiMu",
                            "m_doPhotonCuts"               : True,
                            "m_useCaloJetTerm"             : True,
                            "m_useTrackJetTerm"            : False,                     
@@ -319,7 +319,7 @@ METConstructorDict =     { "m_name"                       : "met",
                          }
 
 
-OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSDiLep",
+OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSDiMu",
                            "m_debug"                      : False,
                            "m_useCutFlow"                 : True,
                            "m_createSelectedContainers"   : True,
@@ -615,7 +615,7 @@ TreeAlgoDict             = { "m_name"                  : "physics",
                              "m_muContainerName"       : "Muons_OR",
                              "m_elContainerName"       : "Electrons_OR",
                              "m_jetContainerName"      : "AntiKt4EMTopoJets_OR",
-                             "m_METContainerName"      : "RefFinal_SSDiLep",
+                             "m_METContainerName"      : "RefFinal_SSDiMu",
                              "m_evtDetailStr"          : "pileup truth",
                              "m_trigDetailStr"         : "basic passTriggers menuKeys passTriggers",
                              "m_muDetailStr"           : "kinematic trigger isolation quality trackparams effSF",
@@ -635,12 +635,12 @@ TruthMatchAlgoDict       = { "m_name"                           : "truthMatching
                            }
 
 
-SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
+SSDiMuTreeAlgoDict      = { "m_name"                  : "physics",
                              "m_debug"                 : False,
                              "m_muContainerName"       : "Muons_OR",
                              "m_elContainerName"       : "Electrons_OR",
                              "m_jetContainerName"      : "AntiKt4EMTopoJets_OR",
-                             "m_METContainerName"      : "RefFinal_SSDiLep",
+                             "m_METContainerName"      : "RefFinal_SSDiMu",
                              "m_outHistDir"            : False,
                              ######"m_evtDetailStr"          : "pileup truth",
                              "m_evtDetailStr"          : "pileup",

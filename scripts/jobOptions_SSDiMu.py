@@ -3,9 +3,9 @@ import ROOT
 from xAH_config import xAH_config
 import sys, os
 
-sys.path.insert(0, os.environ['ROOTCOREBIN']+"/user_scripts/SSDiLepAnalysis/")
+sys.path.insert(0, os.environ['ROOTCOREBIN']+"/user_scripts/SSDiMuAnalysis/")
 
-from config_SSDiLep import *
+from config_SSDiMu import *
 
 c = xAH_config()
 
@@ -37,5 +37,5 @@ c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientLooseDi
 ###c.setalg("ElectronEfficiencyCorrector", ElectronEfficiencyCorrectorTightDict)
 
 c.setalg("TruthMatchAlgo", TruthMatchAlgoDict)
-c.setalg("SSDiLepTreeAlgo", SSDiLepTreeAlgoDict)
+c.setalg("SSDiMuTreeAlgo", SSDiMuTreeAlgoDict)
 
