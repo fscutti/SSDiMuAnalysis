@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!-- Edited By POOL -->
+<!DOCTYPE POOLFILECATALOG SYSTEM "InMemory">
+<POOLFILECATALOG>
+  <File ID="F67424E4-324B-594F-82EB-2C571C592695">
+    <physical>
+      <pfn filetype="ROOT_All" name="/data/fscutti/mc15_13TeV.302451.Pythia8EvtGen_A14NNPDF23LO_DCH500.merge.DAOD_EXOT12.e3986_a766_a768_r6282_p2419/DAOD_EXOT12.06523655._000002.pool.root.1"/>
+    </physical>
+    <logical/>
+  </File>
+
+</POOLFILECATALOG>
