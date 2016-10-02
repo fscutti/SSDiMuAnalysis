@@ -627,7 +627,7 @@ TreeAlgoDict             = { "m_name"                  : "physics",
                            }
 """
 # Truth matching info just for muons
-TruthMatchAlgoDict       = { "m_name"                           : "truthMatching",
+TruthMatchAlgoDiMuDict       = { "m_name"                           : "truthMatching",
                              "m_debug"                          : False,
                              "m_inContainerName_Electrons"      : "Electrons_OR",
                              "m_inContainerName_Muons"          : "Muons_OR",
