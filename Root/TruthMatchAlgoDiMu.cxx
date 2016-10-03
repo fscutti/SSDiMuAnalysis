@@ -28,7 +28,7 @@
 #include "xAODTruth/TruthVertex.h"
 
 // package include(s):
-#include "SSDiMuAnalysis/TruthMatchAlgo.h"
+#include "SSDiMuAnalysis/TruthMatchAlgoDiMu.h"
 #include "xAODAnaHelpers/HelperClasses.h"
 #include "xAODAnaHelpers/HelperFunctions.h"
 #include <xAODAnaHelpers/tools/ReturnCheck.h>
@@ -45,15 +45,15 @@
 
 
 // Another truth matching example
-// https://svnweb.cern.ch/trac/atlasphys-hsg8/browser/Physics/Higgs/HSG8/AnalysisCode/multileptons/xAOD/ttHMultiAna/trunk/Root/TruthMatchAlgo.cxx
+// https://svnweb.cern.ch/trac/atlasphys-hsg8/browser/Physics/Higgs/HSG8/AnalysisCode/multileptons/xAOD/ttHMultiAna/trunk/Root/TruthMatchAlgoDiMu.cxx
 
 
 
 // this is needed to distribute the algorithm to the workers
-ClassImp(TruthMatchAlgo)
+ClassImp(TruthMatchAlgoDiMu)
 
 
-TruthMatchAlgo :: TruthMatchAlgo () :
+TruthMatchAlgoDiMu :: TruthMatchAlgoDiMu () :
   m_cutflowHist(nullptr),
   m_cutflowHistW(nullptr)
 {
@@ -64,7 +64,7 @@ TruthMatchAlgo :: TruthMatchAlgo () :
   // initialization code will go into histInitialize() and
   // initialize().
 
-  Info("TruthMatchAlgo()", "Calling constructor");
+  Info("TruthMatchAlgoDiMu()", "Calling constructor");
 
   m_inContainerName_Electrons   = "";
   m_inContainerName_Muons       = "";
@@ -74,10 +74,10 @@ TruthMatchAlgo :: TruthMatchAlgo () :
   m_doMuonTrackMatching         = true;
 }
 
-TruthMatchAlgo::~TruthMatchAlgo() {}
+TruthMatchAlgoDiMu::~TruthMatchAlgoDiMu() {}
 
 
-EL::StatusCode TruthMatchAlgo :: setupJob (EL::Job& job)
+EL::StatusCode TruthMatchAlgoDiMu :: setupJob (EL::Job& job)
 {
   // Here you put code that sets up the job on the submission object
   // so that it is ready to work with your algorithm, e.g. you can
@@ -90,14 +90,14 @@ EL::StatusCode TruthMatchAlgo :: setupJob (EL::Job& job)
   Info("setupJob()", "Calling setupJob");
 
   job.useXAOD ();
-  xAOD::Init( "TruthMatchAlgo" ).ignore(); // call before opening first file
+  xAOD::Init( "TruthMatchAlgoDiMu" ).ignore(); // call before opening first file
 
   return EL::StatusCode::SUCCESS;
 }
 
 
 
-EL::StatusCode TruthMatchAlgo :: histInitialize ()
+EL::StatusCode TruthMatchAlgoDiMu :: histInitialize ()
 {
   // Here you do everything that needs to be done at the very
   // beginning on each worker node, e.g. create histograms and output
@@ -111,7 +111,7 @@ EL::StatusCode TruthMatchAlgo :: histInitialize ()
 
 
 
-EL::StatusCode TruthMatchAlgo :: fileExecute ()
+EL::StatusCode TruthMatchAlgoDiMu :: fileExecute ()
 {
   // Here you do everything that needs to be done exactly once for every
   // single file, e.g. collect a list of all lumi-blocks processed
@@ -135,7 +135,7 @@ EL::StatusCode TruthMatchAlgo :: fileExecute ()
 
 
 
-EL::StatusCode TruthMatchAlgo :: changeInput (bool /*firstFile*/)
+EL::StatusCode TruthMatchAlgoDiMu :: changeInput (bool /*firstFile*/)
 {
   // Here you do everything you need to do when we change input files,
   // e.g. resetting branch addresses on trees.  If you are using
@@ -147,7 +147,7 @@ EL::StatusCode TruthMatchAlgo :: changeInput (bool /*firstFile*/)
 }
 
 
-EL::StatusCode TruthMatchAlgo :: initialize ()
+EL::StatusCode TruthMatchAlgoDiMu :: initialize ()
 {
   // Here you do everything that you need to do after the first input
   // file has been connected and before the first event is processed,
@@ -158,13 +158,13 @@ EL::StatusCode TruthMatchAlgo :: initialize ()
   // you create here won't be available in the output if you have no
   // input events.
 
-  Info("initialize()", "Initializing TruthMatchAlgo Interface...");
+  Info("initialize()", "Initializing TruthMatchAlgoDiMu Interface...");
 
   m_event = wk()->xaodEvent();
   m_store = wk()->xaodStore();
 
   const xAOD::EventInfo* eventInfo(nullptr);
-  RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(eventInfo, "EventInfo", m_event, m_store, m_verbose) , "");
+  RETURN_CHECK("TruthMatchAlgoDiMu::execute()", HelperFunctions::retrieve(eventInfo, "EventInfo", m_event, m_store, m_verbose) , "");
 
   m_isMC = ( eventInfo->eventType( xAOD::EventInfo::IS_SIMULATION ) );
 
@@ -220,27 +220,27 @@ EL::StatusCode TruthMatchAlgo :: initialize ()
   // initialise MCTruthClassifier
   //
   m_MCTClassifier = new MCTruthClassifier("MCTruthClassifier");
-  RETURN_CHECK( "TruthMatchAlgo::initialize()", m_MCTClassifier->initialize(), "Failed to properly initialize MCTruthClassifier" );
+  RETURN_CHECK( "TruthMatchAlgoDiMu::initialize()", m_MCTClassifier->initialize(), "Failed to properly initialize MCTruthClassifier" );
 
-  Info("initialize()", "TruthMatchAlgo Interface succesfully initialized!" );
+  Info("initialize()", "TruthMatchAlgoDiMu Interface succesfully initialized!" );
 
   return EL::StatusCode::SUCCESS;
 }
 
 
-EL::StatusCode TruthMatchAlgo :: execute ()
+EL::StatusCode TruthMatchAlgoDiMu :: execute ()
 {
   // Here you do everything that needs to be done on every single
   // events, e.g. read input variables, apply cuts, and fill
   // histograms and trees.  This is where most of your actual analysis
   // code will go.
 
-  if ( m_debug ) { Info("execute()", "Applying TruthMatchAlgo..."); }
+  if ( m_debug ) { Info("execute()", "Applying TruthMatchAlgoDiMu..."); }
 
   // retrieve event
   //
   const xAOD::EventInfo* eventInfo(nullptr);
-  RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(eventInfo, "EventInfo", m_event, m_store, m_verbose) , "");
+  RETURN_CHECK("TruthMatchAlgoDiMu::execute()", HelperFunctions::retrieve(eventInfo, "EventInfo", m_event, m_store, m_verbose) , "");
 
   // MC event weight
   //
@@ -256,7 +256,7 @@ EL::StatusCode TruthMatchAlgo :: execute ()
   // retrieve leptonsCDV from store
   //
   //ConstDataVector<xAOD::IParticleContainer>* leptonsCDV(nullptr);
-  //RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(leptonsCDV, m_inContainerName_Leptons, m_event, m_store, m_verbose) , "");
+  //RETURN_CHECK("TruthMatchAlgoDiMu::execute()", HelperFunctions::retrieve(leptonsCDV, m_inContainerName_Leptons, m_event, m_store, m_verbose) , "");
 
   //if ( m_debug ) { Info("execute()"," number of leptons: %lu ", leptonsCDV->size() ); }
 
@@ -292,11 +292,11 @@ EL::StatusCode TruthMatchAlgo :: execute ()
   */
   
   const xAOD::MuonContainer* inputMuons(nullptr);
-  RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(inputMuons, m_inContainerName_Muons, m_event, m_store, m_verbose) ,"");
+  RETURN_CHECK("TruthMatchAlgoDiMu::execute()", HelperFunctions::retrieve(inputMuons, m_inContainerName_Muons, m_event, m_store, m_verbose) ,"");
   if ( m_debug ) { Info( "execute", "Number of muons: %i", static_cast<int>(inputMuons->size()) ); }
   
   const xAOD::ElectronContainer* inputElectrons(nullptr);
-  RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(inputElectrons, m_inContainerName_Electrons, m_event, m_store, m_verbose) ,"");
+  RETURN_CHECK("TruthMatchAlgoDiMu::execute()", HelperFunctions::retrieve(inputElectrons, m_inContainerName_Electrons, m_event, m_store, m_verbose) ,"");
   if ( m_debug ) { Info( "execute", "Number of electrons: %i", static_cast<int>(inputElectrons->size()) ); }
   
 
@@ -338,7 +338,7 @@ EL::StatusCode TruthMatchAlgo :: execute ()
   return EL::StatusCode::SUCCESS;
 }
 
-EL::StatusCode TruthMatchAlgo :: postExecute ()
+EL::StatusCode TruthMatchAlgoDiMu :: postExecute ()
 {
   // Here you do everything that needs to be done after the main event
   // processing.  This is typically very rare, particularly in user
@@ -349,7 +349,7 @@ EL::StatusCode TruthMatchAlgo :: postExecute ()
   return EL::StatusCode::SUCCESS;
 }
 
-EL::StatusCode TruthMatchAlgo :: finalize ()
+EL::StatusCode TruthMatchAlgoDiMu :: finalize ()
 {
   // This method is the mirror image of initialize(), meaning it gets
   // called after the last event has been processed on the worker node
@@ -402,7 +402,7 @@ EL::StatusCode TruthMatchAlgo :: finalize ()
   return EL::StatusCode::SUCCESS;
 }
 
-EL::StatusCode TruthMatchAlgo :: histFinalize ()
+EL::StatusCode TruthMatchAlgoDiMu :: histFinalize ()
 {
   // This method is the mirror image of histInitialize(), meaning it
   // gets called after the last event has been processed on the worker
@@ -421,7 +421,7 @@ EL::StatusCode TruthMatchAlgo :: histFinalize ()
 }
 
 
-EL::StatusCode TruthMatchAlgo ::  checkChargeFlip ( const xAOD::IParticle* recoPart, const xAOD::TruthParticle* matchTruth )
+EL::StatusCode TruthMatchAlgoDiMu ::  checkChargeFlip ( const xAOD::IParticle* recoPart, const xAOD::TruthParticle* matchTruth )
 {
 
   // default decorations
@@ -595,7 +595,7 @@ EL::StatusCode TruthMatchAlgo ::  checkChargeFlip ( const xAOD::IParticle* recoP
 }
 
 
-EL::StatusCode TruthMatchAlgo ::  applyTruthMatchingElectron ( const xAOD::IParticle* recoPart )
+EL::StatusCode TruthMatchAlgoDiMu ::  applyTruthMatchingElectron ( const xAOD::IParticle* recoPart )
 {
 
   // return immediately if input particle is not an electron
@@ -678,7 +678,7 @@ EL::StatusCode TruthMatchAlgo ::  applyTruthMatchingElectron ( const xAOD::IPart
 }
 
 
-EL::StatusCode TruthMatchAlgo ::  applyTruthMatchingMuon ( const xAOD::IParticle* recoPart )
+EL::StatusCode TruthMatchAlgoDiMu ::  applyTruthMatchingMuon ( const xAOD::IParticle* recoPart )
 {
 
   // return immediately if input particle is not a muon
@@ -694,10 +694,10 @@ EL::StatusCode TruthMatchAlgo ::  applyTruthMatchingMuon ( const xAOD::IParticle
   // See the header file for more info.
   //
   const xAOD::TruthParticleContainer* muonTruthPartContainer(nullptr);
-  RETURN_CHECK("TruthMatchAlgo::applyTruthMatchingMuon()", HelperFunctions::retrieve(muonTruthPartContainer, "MuonTruthParticles", m_event, m_store, m_verbose) , "");
+  RETURN_CHECK("TruthMatchAlgoDiMu::applyTruthMatchingMuon()", HelperFunctions::retrieve(muonTruthPartContainer, "MuonTruthParticles", m_event, m_store, m_verbose) , "");
   
   //const xAOD::TruthParticleContainer* TruthPartContainer(nullptr);
-  //RETURN_CHECK("TruthMatchAlgo::applyTruthMatchingMuon()", HelperFunctions::retrieve(TruthPartContainer, "TruthParticles", m_event, m_store, m_verbose) , "");
+  //RETURN_CHECK("TruthMatchAlgoDiMu::applyTruthMatchingMuon()", HelperFunctions::retrieve(TruthPartContainer, "TruthParticles", m_event, m_store, m_verbose) , "");
 
   if ( m_doMuonTrackMatching  ) {
 
@@ -727,7 +727,7 @@ EL::StatusCode TruthMatchAlgo ::  applyTruthMatchingMuon ( const xAOD::IParticle
   return EL::StatusCode::SUCCESS;
 }
 
-EL::StatusCode TruthMatchAlgo :: doMuonTrackMatching( const xAOD::IParticle* recoPart )
+EL::StatusCode TruthMatchAlgoDiMu :: doMuonTrackMatching( const xAOD::IParticle* recoPart )
 {
 
    // decorate reconstructed particle with default values
@@ -834,7 +834,7 @@ EL::StatusCode TruthMatchAlgo :: doMuonTrackMatching( const xAOD::IParticle* rec
 
 }
 
-EL::StatusCode TruthMatchAlgo :: doMuonTruthPartMatching ( const xAOD::IParticle* recoPart )
+EL::StatusCode TruthMatchAlgoDiMu :: doMuonTruthPartMatching ( const xAOD::IParticle* recoPart )
 {
 
    // decorate reconstructed particle with default values
@@ -940,7 +940,7 @@ EL::StatusCode TruthMatchAlgo :: doMuonTruthPartMatching ( const xAOD::IParticle
 }
 
 
-EL::StatusCode TruthMatchAlgo :: applySignalTruthMatching ( const xAOD::EventInfo* eventInfo )
+EL::StatusCode TruthMatchAlgoDiMu :: applySignalTruthMatching ( const xAOD::EventInfo* eventInfo )
 {
 
   (*m_HLpp_DaughtersDecor)( *eventInfo ) = std::vector<int>();
@@ -954,7 +954,7 @@ EL::StatusCode TruthMatchAlgo :: applySignalTruthMatching ( const xAOD::EventInf
   (*m_HRmm_DaughtersDecor)( *eventInfo ).push_back(0);
 
   const xAOD::TruthParticleContainer* TruthPartContainer(nullptr);
-  RETURN_CHECK("TruthMatchAlgo::applyTruthMatchingMuon()", HelperFunctions::retrieve(TruthPartContainer, "TruthParticles", m_event, m_store, m_verbose) , "");
+  RETURN_CHECK("TruthMatchAlgoDiMu::applyTruthMatchingMuon()", HelperFunctions::retrieve(TruthPartContainer, "TruthParticles", m_event, m_store, m_verbose) , "");
 
   //std::cout << "signal truth matching " << &TruthPartContainer << std::endl;
 

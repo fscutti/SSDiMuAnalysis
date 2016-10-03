@@ -1,5 +1,5 @@
-#ifndef SSDiMuAnalysis_TruthMatchAlgo_H
-#define SSDiMuAnalysis_TruthMatchAlgo_H
+#ifndef SSDiMuAnalysis_TruthMatchAlgoDiMu_H
+#define SSDiMuAnalysis_TruthMatchAlgoDiMu_H
 
 // EL include(s):
 #include <EventLoop/Algorithm.h>
@@ -27,7 +27,7 @@
 // ROOT include(s):
 #include "TH1D.h"
 
-class TruthMatchAlgo : public xAH::Algorithm
+class TruthMatchAlgoDiMu : public xAH::Algorithm
 {
   // put your configuration variables here as public variables.
   // that way they can be set directly from CINT and python.
@@ -98,9 +98,9 @@ private:
 public:
 
   // this is a standard constructor
-  TruthMatchAlgo ();
+  TruthMatchAlgoDiMu ();
 
-  ~TruthMatchAlgo();
+  ~TruthMatchAlgoDiMu();
 
   // these are the functions inherited from Algorithm
   virtual EL::StatusCode setupJob (EL::Job& job);
@@ -136,7 +136,7 @@ public:
   virtual EL::StatusCode checkChargeFlip ( const xAOD::IParticle* recoPart, const xAOD::TruthParticle* matchTruth );
 
   // this is needed to distribute the algorithm to the workers
-  ClassDef(TruthMatchAlgo, 1);
+  ClassDef(TruthMatchAlgoDiMu, 1);
 };
 
 #endif

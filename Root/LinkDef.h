@@ -1,6 +1,6 @@
 #include <SSDiMuAnalysis/SSDiMuTree.h>
 #include <SSDiMuAnalysis/SSDiMuTreeAlgo.h>
-#include <SSDiMuAnalysis/TruthMatchAlgo.h>
+#include <SSDiMuAnalysis/TruthMatchAlgoDiMu.h>
 #ifdef __CINT__
 
 #pragma link off all globals;
@@ -13,7 +13,7 @@
 #ifdef __CINT__
 #pragma link C++ class SSDiMuTree+;
 #pragma link C++ class SSDiMuTreeAlgo+;
-#pragma link C++ class TruthMatchAlgo+;
+#pragma link C++ class TruthMatchAlgoDiMu+;
 #endif
 
 
