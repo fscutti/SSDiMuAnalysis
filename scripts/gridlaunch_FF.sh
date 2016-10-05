@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# check downtime calendar for sites here:
+# http://atlas-agis.cern.ch/agis/downtime/calendar/
+
 username=fscutti
 
 prodtag=HIGG3D3_v3_p2689

@@ -213,9 +213,6 @@ EL::StatusCode TruthMatchAlgoDiMu :: initialize ()
   m_truthMatchProbabilityAcc = nullptr     ; m_truthMatchProbabilityAcc     = new SG::AuxElement::Accessor<float>("truthMatchProbability");
   m_ancestorTruthTypeAcc = nullptr         ; m_ancestorTruthTypeAcc         = new SG::AuxElement::Accessor< int >("ancestorTruthType");
   m_ancestorTruthOriginAcc = nullptr       ; m_ancestorTruthOriginAcc       = new SG::AuxElement::Accessor< int >("ancestorTruthOrigin");
-  
-  
-
 
   // initialise MCTruthClassifier
   //
