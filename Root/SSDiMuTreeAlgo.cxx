@@ -65,15 +65,6 @@ EL::StatusCode SSDiMuTreeAlgo :: execute ()
     }
   }
 
-  //if(!m_photonSystsVec.empty()){
-  //  RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(systNames, m_photonSystsVec, 0, m_store, m_verbose) ,"");
-  //  for(const auto& systName: *systNames){
-  //    if (std::find(event_systNames.begin(), event_systNames.end(), systName) != event_systNames.end()) continue;
-  //    event_systNames.push_back(systName);
-  //    photonSystNames.push_back(systName);
-  //  }
-  //}
-
   TFile* treeFile = wk()->getOutputFile ("tree");
 
   // let's make the tdirectory and ttrees
@@ -109,13 +100,7 @@ EL::StatusCode SSDiMuTreeAlgo :: execute ()
     if ( !m_muContainerName.empty() )     {   helpTree->AddMuons      (m_muDetailStr);      }
     if ( !m_elContainerName.empty() )     {   helpTree->AddElectrons  (m_elDetailStr);      }
     if ( !m_jetContainerName.empty() )    {   helpTree->AddJets       (m_jetDetailStr, "jet");     }
-    //if ( !m_trigJetContainerName.empty() ){   helpTree->AddJets       (m_trigJetDetailStr, "trigJet");     }
-    //if ( !m_truthJetContainerName.empty() ){  helpTree->AddJets       (m_truthJetDetailStr, "truthJet");     }
-    //if ( !m_fatJetContainerName.empty() ) {   helpTree->AddFatJets    (m_fatJetDetailStr);  }
-    //if ( !m_tauContainerName.empty() )    {   helpTree->AddTaus       (m_tauDetailStr);     }
     if ( !m_METContainerName.empty() )    {   helpTree->AddMET        (m_METDetailStr);     }
-    //if ( !m_photonContainerName.empty() ) {   helpTree->AddPhotons    (m_photonDetailStr);  }
-    //if ( !m_lepContainerName.empty() )    {   helpTree->AddLeptons    ();                   }
   }
 
   /* THIS IS WHERE WE START PROCESSING THE EVENT AND PLOTTING THINGS */
@@ -147,7 +132,6 @@ EL::StatusCode SSDiMuTreeAlgo :: execute ()
     if (std::find(muSystNames.begin(), muSystNames.end(), systName) != muSystNames.end()) muSuffix = systName;
     if (std::find(elSystNames.begin(), elSystNames.end(), systName) != elSystNames.end()) elSuffix = systName;
     if (std::find(jetSystNames.begin(), jetSystNames.end(), systName) != jetSystNames.end()) jetSuffix = systName;
-    //if (std::find(photonSystNames.begin(), photonSystNames.end(), systName) != photonSystNames.end()) photonSuffix = systName;
 
     helpTree->FillEvent( eventInfo, m_event );
 
@@ -156,10 +140,6 @@ EL::StatusCode SSDiMuTreeAlgo :: execute ()
       helpTree->FillTrigger( eventInfo );
     }
 
-    // Fill jet trigger information - this can be used if with layer/cleaning info we need to turn off some variables?
-    /*if ( !m_trigJetDetailStr.empty() ) {
-      helpTree->FillJetTrigger();
-    }*/
 
     // for the containers the were supplied, fill the appropriate vectors
     if ( !m_muContainerName.empty() ) {
@@ -185,45 +165,11 @@ EL::StatusCode SSDiMuTreeAlgo :: execute ()
       const xAOD::JetContainer inJetsSorted = HelperFunctions::sort_container_pt( inJets );
       helpTree->FillJets( &inJetsSorted );
     }
-    //if ( !m_trigJetContainerName.empty() ) {
-    //  const xAOD::JetContainer* inTrigJets(nullptr);
-    //  RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(inTrigJets, m_trigJetContainerName, m_event, m_store, m_verbose) ,"");
-    //  helpTree->FillJets( inTrigJets, HelperFunctions::getPrimaryVertexLocation(vertices), "trigJet" );
-    //}
-    //if ( !m_truthJetContainerName.empty() ) {
-    //  const xAOD::JetContainer* inTruthJets(nullptr);
-    //  RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(inTruthJets, m_truthJetContainerName, m_event, m_store, m_verbose) ,"");
-    //      helpTree->FillJets( inTruthJets, HelperFunctions::getPrimaryVertexLocation(vertices), "truthJet" );
-    //}
-    //if ( !m_fatJetContainerName.empty() ) {
-    //  const xAOD::JetContainer* inFatJets(nullptr);
-    //  RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(inFatJets, m_fatJetContainerName, m_event, m_store, m_verbose) ,"");
-    //  helpTree->FillFatJets( inFatJets );
-    //}
-    //if ( !m_tauContainerName.empty() ) {
-    //  const xAOD::TauJetContainer* inTaus(nullptr);
-    //  RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(inTaus, m_tauContainerName, m_event, m_store, m_verbose) , "");
-    //  // sort, and pass the reference to FillTaus()
-    //  const xAOD::TauJetContainer inTausSorted = HelperFunctions::sort_container_pt( inTaus );
-    //  helpTree->FillTaus( &inTausSorted );
-    //}
     if ( !m_METContainerName.empty() ) {
       const xAOD::MissingETContainer* inMETCont(nullptr);
       RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(inMETCont, m_METContainerName, m_event, m_store, m_debug) , "");
       helpTree->FillMET( inMETCont );
     }
-    //if ( !m_photonContainerName.empty() ) {
-    //  const xAOD::PhotonContainer* inPhotons(nullptr);
-    //  RETURN_CHECK("SSDiMuTreeAlgo::execute()", HelperFunctions::retrieve(inPhotons, m_photonContainerName+photonSuffix, m_event, m_store, m_verbose) ,"");
-    //  helpTree->FillPhotons( inPhotons );
-    //}
-    //if ( !m_lepContainerName.empty() ) {
-    //  ConstDataVector<xAOD::IParticleContainer>* leptonsCDV(nullptr);
-    //  RETURN_CHECK("SSDiMuAnalysis::execute()", HelperFunctions::retrieve(leptonsCDV, m_lepContainerName, m_event, m_store, m_debug) ,"");
-    //  // sort, and pass the reference to FillLeptons()
-    //  const xAOD::IParticleContainer leptonsSorted = HelperFunctions::sort_container_pt( leptonsCDV->asDataVector() );
-    //  helpTree->FillLeptons( &leptonsSorted );
-    //}
 
     // fill the tree
     helpTree->Fill();
