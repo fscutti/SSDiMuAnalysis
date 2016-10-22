@@ -83,7 +83,7 @@ void SSDiMuTree::ClearEventUser()
   }
 }
 
-void SSDiMuTree::ClearMuonsUser()
+void SSDiMuTree::ClearMuonsUser( const std::string& )
 {
   // muon variables
   m_muon_isTruthMatched.clear();
@@ -93,7 +93,7 @@ void SSDiMuTree::ClearMuonsUser()
   m_muon_truthStatus.clear();
 }
 
-void SSDiMuTree::ClearElectronsUser()
+void SSDiMuTree::ClearElectronsUser( const std::string& )
 {
   // electron variables
   m_electron_isTruthMatched.clear();
@@ -112,7 +112,7 @@ void SSDiMuTree::ClearElectronsUser()
 
 }
 
-void SSDiMuTree::ClearJetsUser( const std::string jetName )
+void SSDiMuTree::ClearJetsUser( const std::string& jetName )
 {
   if ( m_debug ) { Info("ClearJetsUser()", "Clearing jet branches - Jet name: %s", jetName.c_str()); }
 
@@ -152,7 +152,7 @@ void SSDiMuTree::FillJetsUser( const xAOD::Jet* jet, const std::string jetName )
   m_jet_m.push_back( jet->m() );
 }
 
-void SSDiMuTree::FillMuonsUser( const xAOD::Muon* muon, const std::string /*muonName = "muon"*/  )
+void SSDiMuTree::FillMuonsUser( const xAOD::Muon* muon, const std::string )
 {
 
   if ( m_debug ) { Info("FillMuonsUser()", "Filling muons"); }
@@ -178,7 +178,7 @@ void SSDiMuTree::FillMuonsUser( const xAOD::Muon* muon, const std::string /*muon
 
 }
 
-void SSDiMuTree::FillElectronsUser( const xAOD::Electron* electron )
+void SSDiMuTree::FillElectronsUser( const xAOD::Electron* electron,  const std::string )
 {
 
   if ( m_debug ) { Info("FillElectronsUser()", "Filling electrons"); }
