@@ -83,7 +83,7 @@ void SSDiMuTree::ClearEventUser()
   }
 }
 
-void SSDiMuTree::ClearMuonsUser( const std::string& )
+void SSDiMuTree::ClearMuonsUser( const std::string )
 {
   // muon variables
   m_muon_isTruthMatched.clear();
@@ -93,7 +93,7 @@ void SSDiMuTree::ClearMuonsUser( const std::string& )
   m_muon_truthStatus.clear();
 }
 
-void SSDiMuTree::ClearElectronsUser( const std::string& )
+void SSDiMuTree::ClearElectronsUser( const std::string )
 {
   // electron variables
   m_electron_isTruthMatched.clear();
@@ -112,7 +112,7 @@ void SSDiMuTree::ClearElectronsUser( const std::string& )
 
 }
 
-void SSDiMuTree::ClearJetsUser( const std::string& jetName )
+void SSDiMuTree::ClearJetsUser( const std::string jetName )
 {
   if ( m_debug ) { Info("ClearJetsUser()", "Clearing jet branches - Jet name: %s", jetName.c_str()); }
 

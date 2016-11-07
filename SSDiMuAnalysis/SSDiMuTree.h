@@ -68,9 +68,9 @@ class SSDiMuTree : public HelpTreeBase
     void AddJetsUser(const std::string detailStrUser = "", const std::string = "jet" );
 
     virtual void ClearEventUser();
-    virtual void ClearMuonsUser(const std::string& );
-    virtual void ClearElectronsUser(const std::string& );
-    virtual void ClearJetsUser( const std::string& );
+    virtual void ClearMuonsUser(const std::string );
+    virtual void ClearElectronsUser(const std::string );
+    virtual void ClearJetsUser( const std::string );
 
     virtual void FillEventUser( const xAOD::EventInfo* );
     virtual void FillMuonsUser( const xAOD::Muon*, const std::string );
